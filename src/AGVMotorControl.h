@@ -12,7 +12,7 @@
 #define DEFAULT_LEFT_ENCODER_B_PIN  8
 #define DEFAULT_RIGHT_ENCODER_A_PIN 3
 #define DEFAULT_RIGHT_ENCODER_B_PIN 9
-#define DEFAULT_ENCODER_PPR         266 ///< Default pulses per rotation
+#define DEFAULT_ENCODER_PPR         1000 ///< Default pulses per rotation
 
 /**
  * @class AGVMotorControl

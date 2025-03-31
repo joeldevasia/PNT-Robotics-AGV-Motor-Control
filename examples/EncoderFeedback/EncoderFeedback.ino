@@ -9,38 +9,24 @@
 // Note: Default pins in this library are configured for Arduino Mega 2560.
 // Use custom initialization if using a different board or pin configuration.
 
-// Define motor and encoder pins
-const int leftMotorPwmPin = 3;
-const int leftMotorDirPin = 4;
-const int rightMotorPwmPin = 5;
-const int rightMotorDirPin = 6;
-const int leftEncoderAPin = 2;
-const int leftEncoderBPin = 7;
-const int rightEncoderAPin = 8;
-const int rightEncoderBPin = 9;
-
 // Initialize motor control
-AGVMotorControl motorControl(leftMotorPwmPin, leftMotorDirPin, rightMotorPwmPin, rightMotorDirPin,
-                              leftEncoderAPin, leftEncoderBPin, rightEncoderAPin, rightEncoderBPin, 360);
-
+AGVMotorControl motorControl(DEFAULT_LEFT_MOTOR_PWM_PIN, DEFAULT_LEFT_MOTOR_DIR_PIN, DEFAULT_RIGHT_MOTOR_PWM_PIN, DEFAULT_RIGHT_MOTOR_DIR_PIN,
+                             DEFAULT_LEFT_ENCODER_A_PIN, DEFAULT_LEFT_ENCODER_B_PIN, DEFAULT_RIGHT_ENCODER_A_PIN, DEFAULT_RIGHT_ENCODER_B_PIN, DEFAULT_ENCODER_PPR);
 void setup() {
-    Serial.begin(115200);
-    motorControl.setup();
-    motorControl.resetEncoders();
+  Serial.begin(115200);
+  motorControl.setup();
+  motorControl.resetEncoders();
+  motorControl.moveForward(20, 20);
 }
 
 void loop() {
-    motorControl.moveForward(150, 150);
-    delay(2000);
 
-    motorControl.stop();
-    delay(1000);
+  Serial.print("Left Encoder Count: ");
+  Serial.print(motorControl.getLeftEncoderCount());
+  Serial.print("    Right Encoder Count: ");
+  Serial.println(motorControl.getRightEncoderCount());
 
-    Serial.print("Left Encoder Count: ");
-    Serial.println(motorControl.getLeftEncoderCount());
-    Serial.print("Right Encoder Count: ");
-    Serial.println(motorControl.getRightEncoderCount());
-
+  if (motorControl.getLeftEncoderCount() % 3000 == 0) {
     motorControl.resetEncoders();
-    delay(1000);
+  }
 }
