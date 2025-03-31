@@ -1,0 +1,26 @@
+# Syntax Coloring Map For AGVMotorControl
+
+# Datatypes (KEYWORD1)
+AGVMotorControl	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+setup	KEYWORD2
+moveForward	KEYWORD2
+moveBackward	KEYWORD2
+stop	KEYWORD2
+rotateClockwise	KEYWORD2
+rotateAnticlockwise	KEYWORD2
+setPWMLimits	KEYWORD2
+setLeftMotorInverted	KEYWORD2
+setRightMotorInverted	KEYWORD2
+isLeftMotorInverted	KEYWORD2
+isRightMotorInverted	KEYWORD2
+resetEncoders	KEYWORD2
+getLeftEncoderCount	KEYWORD2
+getRightEncoderCount	KEYWORD2
+setLeftEncoderInverted	KEYWORD2
+setRightEncoderInverted	KEYWORD2
+isLeftEncoderInverted	KEYWORD2
+isRightEncoderInverted	KEYWORD2
+setEncoderPPR	KEYWORD2
+getEncoderPPR	KEYWORD2
