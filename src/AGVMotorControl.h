@@ -184,6 +184,20 @@ public:
      */
     int getEncoderPPR() const;
 
+    /**
+     * @brief Gets the current PWM value of the left motor.
+     * 
+     * @return The current PWM value of the left motor.
+     */
+    int getLeftMotorPWM() const;
+
+    /**
+     * @brief Gets the current PWM value of the right motor.
+     * 
+     * @return The current PWM value of the right motor.
+     */
+    int getRightMotorPWM() const;
+
 private:
     int leftMotorPwmPin; ///< PWM pin for the left motor.
     int leftMotorDirPin; ///< Direction pin for the left motor.
@@ -201,6 +215,9 @@ private:
     bool rightEncoderInverted; ///< Flag to indicate if the right encoder counting is inverted.
 
     int encoderPPR; ///< Pulses per rotation for the encoders.
+
+    int currentLeftMotorPWM; ///< Current PWM value for the left motor.
+    int currentRightMotorPWM; ///< Current PWM value for the right motor.
 
     // Encoder counts
     static volatile long leftEncoderCount;

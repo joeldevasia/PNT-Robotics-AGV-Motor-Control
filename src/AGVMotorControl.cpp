@@ -16,7 +16,9 @@ AGVMotorControl::AGVMotorControl(int leftMotorPwmPin, int leftMotorDirPin, int r
       leftMotorInverted(false), rightMotorInverted(false),
       encoderPPR(ppr),
       leftEncoderInverted(false), // Encoders are not inverted by default
-      rightEncoderInverted(false) // Encoders are not inverted by default
+      rightEncoderInverted(false), // Encoders are not inverted by default
+      currentLeftMotorPWM(0), // Initialize current PWM values to 0
+      currentRightMotorPWM(0) // Initialize current PWM values to 0
 {
     instance = this; // Set the static instance pointer to this instance
 }
@@ -41,6 +43,8 @@ void AGVMotorControl::setup() {
 void AGVMotorControl::moveForward(int leftMotorPWM, int rightMotorPWM) {
     leftMotorPWM = constrain(leftMotorPWM, minPwmValue, maxPwmValue);
     rightMotorPWM = constrain(rightMotorPWM, minPwmValue, maxPwmValue);
+    currentLeftMotorPWM = leftMotorPWM; // Update current PWM value
+    currentRightMotorPWM = rightMotorPWM; // Update current PWM value
     analogWrite(leftMotorPwmPin, leftMotorPWM);
     analogWrite(rightMotorPwmPin, rightMotorPWM);
     digitalWrite(leftMotorDirPin, leftMotorInverted ? LOW : HIGH);
@@ -50,6 +54,8 @@ void AGVMotorControl::moveForward(int leftMotorPWM, int rightMotorPWM) {
 void AGVMotorControl::moveBackward(int leftMotorPWM, int rightMotorPWM) {
     leftMotorPWM = constrain(leftMotorPWM, minPwmValue, maxPwmValue);
     rightMotorPWM = constrain(rightMotorPWM, minPwmValue, maxPwmValue);
+    currentLeftMotorPWM = leftMotorPWM; // Update current PWM value
+    currentRightMotorPWM = rightMotorPWM; // Update current PWM value
     analogWrite(leftMotorPwmPin, leftMotorPWM);
     analogWrite(rightMotorPwmPin, rightMotorPWM);
     digitalWrite(leftMotorDirPin, leftMotorInverted ? HIGH : LOW);
@@ -57,6 +63,8 @@ void AGVMotorControl::moveBackward(int leftMotorPWM, int rightMotorPWM) {
 }
 
 void AGVMotorControl::stop() {
+    currentLeftMotorPWM = 0; // Reset current PWM value
+    currentRightMotorPWM = 0; // Reset current PWM value
     analogWrite(leftMotorPwmPin, 0);
     analogWrite(rightMotorPwmPin, 0);
 }
@@ -64,6 +72,8 @@ void AGVMotorControl::stop() {
 void AGVMotorControl::rotateClockwise(int leftMotorPWM, int rightMotorPWM) {
     leftMotorPWM = constrain(leftMotorPWM, minPwmValue, maxPwmValue);
     rightMotorPWM = constrain(rightMotorPWM, minPwmValue, maxPwmValue);
+    currentLeftMotorPWM = leftMotorPWM; // Update current PWM value
+    currentRightMotorPWM = rightMotorPWM; // Update current PWM value
     analogWrite(leftMotorPwmPin, leftMotorPWM);
     analogWrite(rightMotorPwmPin, rightMotorPWM);
     digitalWrite(leftMotorDirPin, leftMotorInverted ? LOW : HIGH);
@@ -73,6 +83,8 @@ void AGVMotorControl::rotateClockwise(int leftMotorPWM, int rightMotorPWM) {
 void AGVMotorControl::rotateAnticlockwise(int leftMotorPWM, int rightMotorPWM) {
     leftMotorPWM = constrain(leftMotorPWM, minPwmValue, maxPwmValue);
     rightMotorPWM = constrain(rightMotorPWM, minPwmValue, maxPwmValue);
+    currentLeftMotorPWM = leftMotorPWM; // Update current PWM value
+    currentRightMotorPWM = rightMotorPWM; // Update current PWM value
     analogWrite(leftMotorPwmPin, leftMotorPWM);
     analogWrite(rightMotorPwmPin, rightMotorPWM);
     digitalWrite(leftMotorDirPin, leftMotorInverted ? HIGH : LOW);
@@ -163,4 +175,12 @@ void AGVMotorControl::setEncoderPPR(int ppr) {
 
 int AGVMotorControl::getEncoderPPR() const {
     return encoderPPR;
+}
+
+int AGVMotorControl::getLeftMotorPWM() const {
+    return currentLeftMotorPWM;
+}
+
+int AGVMotorControl::getRightMotorPWM() const {
+    return currentRightMotorPWM;
 }
